@@ -10,12 +10,14 @@ class Header extends React.Component {
   render() {
     return (
       <Menu attached="top">
-        <Menu.Item>
+        <Menu.Item header>
           <strong>HealthHack</strong>
         </Menu.Item>
-        <Menu.Item>
-          <Input icon='search' placeholder='Search...' />
-        </Menu.Item>
+        <Menu.Menu position="right" fluid style={{width: "100%"}}>
+          <Menu.Item fluid style={{width: "100%"}}>
+            <Input icon='search' placeholder='Search...' />
+          </Menu.Item>
+        </Menu.Menu>
       </Menu>
     );
   }
