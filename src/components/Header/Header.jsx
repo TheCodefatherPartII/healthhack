@@ -1,23 +1,21 @@
 import React from 'react';
-
-import {
-  Input,
-  Menu,
-} from 'semantic-ui-react';
+import Autocomplete from 'react-google-autocomplete';
+import { Menu } from 'semantic-ui-react';
 
 class Header extends React.Component {
-  state = { searchString: '' };
-
-  onChange = (i, event) => {
-    this.setState({ searchString: event.value.trim() });
-  };
-
-  onKeyPress = event => {
-    if (event.key.toLowerCase() !== 'enter') return;
-
-    console.log('perform search callback');
-    // this.props.performSearch(this.state.searchString);
-  };
+  SuburbSearch() {
+    return (
+      <div className="ui icon input" style={{width:'100%'}}>
+        <Autocomplete
+          style={{minWidth: '40vw'}}
+          onPlaceSelected={this.props.onSuburbSelected}
+          types={['(regions)']}
+          componentRestrictions={{country: "au"}}
+        />
+        <i aria-hidden="true" className="search icon"/>
+      </div>
+    );
+  }
 
   render() {
     return (
@@ -25,16 +23,9 @@ class Header extends React.Component {
         <Menu.Item header>
           <strong>HealthHack</strong>
         </Menu.Item>
-        <Menu.Menu position="right" fluid style={{width: "100%"}}>
-          <Menu.Item fluid style={{width: "100%"}}>
-            <Input
-
-              value={this.state.searchString}
-              onChange={this.onChange}
-              onKeyPress={this.onKeyPress}
-              icon='search'
-              placeholder='Search...'
-            />
+        <Menu.Menu position="right" className='suburb-search'>
+          <Menu.Item className='suburb-search'>
+           {this.SuburbSearch()}
           </Menu.Item>
         </Menu.Menu>
       </Menu>
