@@ -36,7 +36,7 @@ class HealthMap extends React.Component {
                 attached
                 padded={false}
                 style={{
-                height: 'calc(100% - 45px)',
+                height: '100%',
                 width: '100%',
                 padding: 0
             }}>
