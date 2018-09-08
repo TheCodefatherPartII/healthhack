@@ -11,7 +11,9 @@ class App extends Component {
     visible: false
   }
 
-  onMapClick = () => this.setState({visible: !this.state.visible})
+  onMapClicked = (...x) => {
+    this.setState({visible: !this.state.visible});
+  }
   onSuburbSelected = (place) => alert(place);
 
   render() {
@@ -20,7 +22,7 @@ class App extends Component {
     return (
       <Container fluid style={{height: '100%'}}>
         <Header onSuburbSelected={this.onSuburbSelected}/>
-        <HealthMap onMapClick={this.onMapClick} />
+        <HealthMap onMapClicked={this.onMapClicked} />
         <DetailsPanel visible={this.state.visible} />
       </Container>
     );
