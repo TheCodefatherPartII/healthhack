@@ -23,7 +23,9 @@ class HealthMap extends React.Component {
                     key: "AIzaSyBRFyLekDBT0Zh0fF0I2zpcto38orRJ5OA"
                 }}
                     defaultCenter={this.props.center}
-                    defaultZoom={this.props.zoom}></GoogleMapReact>
+                    defaultZoom={this.props.zoom}
+                    onClick={this.props.onMapClick}
+                    ></GoogleMapReact>
             </Segment>
 
         )
