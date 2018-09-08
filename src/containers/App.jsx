@@ -14,11 +14,15 @@ class App extends Component {
   onMapClicked = (...x) => {
     this.setState({visible: !this.state.visible});
   }
-  onSuburbSelected = (place) => alert(place);
+  onSuburbSelected = (place) => {
+    this.setState(() => ({
+      searchedLocation: place.geometry.location
+    }))
+  };
 
   render() {
     if (!this.props.scriptsLoadedSuccessfully) return null;
-
+    console.log("Loading page....")
     return (
       <Container fluid style={{height: '100%'}}>
         <Header onSuburbSelected={this.onSuburbSelected}/>
