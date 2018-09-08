@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux'
 
 import {
   Header,
@@ -12,13 +13,14 @@ import {
 
 class DetailsPanel extends React.Component {
   render() {
+    const { indicators } = this.props;
     return (
       <Sidebar direction="bottom" visible={this.props.visible}>
         <Segment.Group>
           <Segment>
             <Header>Indicators</Header>
             <List>
-              {['wheelchair', 'hospital', 'home'].map(ind =>
+              {indicators.map(ind =>
                 <ListItem key={ind}>
                   <Label image>
                     <Icon circular name={ind} />
@@ -44,4 +46,8 @@ class DetailsPanel extends React.Component {
   }
 }
 
-export default DetailsPanel;
+const mapStateToProps = ({indicators}) => ({
+  indicators, 
+})
+
+export default connect(mapStateToProps)(DetailsPanel);

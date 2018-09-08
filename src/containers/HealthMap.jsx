@@ -14,7 +14,7 @@ class HealthMap extends React.Component {
         return (
             <Segment attached padded={false}
                 style={{
-                height: '60vh',
+                height: 'calc(100% - 45px)',
                 width: '100%',
                 padding: 0
             }}>

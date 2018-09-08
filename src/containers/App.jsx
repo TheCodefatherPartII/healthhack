@@ -13,7 +13,7 @@ class App extends Component {
 
   render() {
     return (
-      <Container fluid>
+      <Container fluid style={{height: '100%'}}>
         <Header/>
         <HealthMap onMapClick={this.onMapClick} />
         <DetailsPanel visible={this.state.visible} />
