@@ -7,7 +7,7 @@ class Header extends React.Component {
     return (
       <div className="ui icon input" style={{width:'100%'}}>
         <Autocomplete
-          style={{minWidth: '40vw'}}
+          style={{minWidth: '30vw'}}
           onPlaceSelected={this.props.onSuburbSelected}
           types={['(regions)']}
           componentRestrictions={{country: "au"}}
@@ -19,7 +19,7 @@ class Header extends React.Component {
 
   render() {
     return (
-      <Menu attached="top">
+      <Menu>
         <Menu.Item header>
           <strong>HealthHack</strong>
         </Menu.Item>

@@ -64,7 +64,7 @@ class HealthMap extends React.Component {
         console.log("coords : " + features)
         return (
             <Segment
-                attached
+
                 padded={false}
                 style={{
                 height: '100%',

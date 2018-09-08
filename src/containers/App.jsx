@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container } from 'semantic-ui-react';
+import { Container, Grid } from 'semantic-ui-react';
 import ScriptLoader from 'react-script-loader-hoc';
 
 import Header from '../components/Header/Header';
@@ -8,7 +8,7 @@ import DetailsPanel from './DetailsPanel';
 
 class App extends Component {
   state = {
-    visible: false
+    visible: true
   }
 
   onMapClicked = (...x) => {
@@ -22,8 +22,16 @@ class App extends Component {
     return (
       <Container fluid style={{height: '100%'}}>
         <Header onSuburbSelected={this.onSuburbSelected}/>
-        <HealthMap onMapClicked={this.onMapClicked} />
-        <DetailsPanel visible={this.state.visible} />
+        <Grid>
+          <Grid.Row>
+            <Grid.Column width={9}>
+              <HealthMap onMapClicked={this.onMapClicked} style={{height: '100%'}} />
+            </Grid.Column>
+            <Grid.Column width={7}>
+        <DetailsPanel visible={this.state.visible} style={{height: '100%'}} />
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
       </Container>
     );
   }
