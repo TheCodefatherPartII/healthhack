@@ -11,18 +11,26 @@ class App extends Component {
     visible: true
   }
 
-  onMapClicked = (...x) => {
-    this.setState({visible: !this.state.visible});
+  onMapClicked = (poly) => {
+    this.setState({
+      lgaName: poly.tag.nsw_lga__2
+    })
+    const bounds = new poly.google.maps.LatLngBounds()
+    for (let i in poly.paths) {
+      const point = poly.paths[i]
+      bounds.extend(new poly.google.maps.LatLng(point.lat, point.lng));
+    }
+    this.onSuburbSelected({geometry: {location: bounds.getCenter()}})
   }
   onSuburbSelected = (place) => {
-    this.setState(() => ({
+    this.setState({
       searchedLocation: place.geometry.location
-    }))
+    })
   };
 
   render() {
     if (!this.props.scriptsLoadedSuccessfully) return null;
-    console.log("Loading page....")
+
     return (
       <Container fluid style={{height: '100%'}}>
         <Header onSuburbSelected={this.onSuburbSelected}/>
@@ -30,13 +38,19 @@ class App extends Component {
           <Grid.Row style={{height: '100%'}}>
             <Grid.Column width={9} className='map-container'>
               <HealthMap
-                onMapClicked={this.onMapClicked} style={{height: '100%'}} />
+                mapCenter={this.state.searchedLocation}
+                onMapClicked={this.onMapClicked}
+                style={{height: '100%'}}
+              />
             </Grid.Column>
             <Grid.Column width={7}>
-        <DetailsPanel visible={this.state.visible}/>
+              <DetailsPanel
+                lgaName={this.state.lgaName}
+              />
             </Grid.Column>
           </Grid.Row>
         </Grid>
+
       </Container>
     );
   }

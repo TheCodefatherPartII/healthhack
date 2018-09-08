@@ -7,6 +7,13 @@ import axios from 'axios';
 import mockCoords from '../simpleLgaRegions.json'
 
 class HealthMap extends React.Component {
+  static defaultProps = {
+    mapCenter: {
+      lat: -33.042476,
+      lng: 146.422921
+      }
+  }
+  
     state = {
         allPolygonCoords: []
     }
@@ -25,20 +32,20 @@ class HealthMap extends React.Component {
         let allCoords = []
         if (features !== undefined) {
             features.map((feature) => {
-                const {geometry} = feature
+                const {geometry, properties} = feature
                 const {coordinates} = geometry
-                allCoords.push(this.getFormattedCoords(feature.properties.lg_ply_pid, coordinates[0][0]))
+                allCoords.push(this.getFormattedCoords(feature.properties.lg_ply_pid, coordinates[0][0], properties))
             })
         }
         return allCoords
     }
 
-    getFormattedCoords(lgId, coordinates) {
+    getFormattedCoords(lgId, coordinates, properties) {
         let formattedCoords = []
         coordinates.map((coord) => {
             formattedCoords.push({lat: coord[1], lng: coord[0]})
         })
-        return {lgId, formattedCoords}
+        return {lgId, formattedCoords, properties}
     }
 
     getRandomColor() {
@@ -59,18 +66,23 @@ class HealthMap extends React.Component {
                 <Map
                     google={this.props.google}
                     zoom={7}
-                    initialCenter={{
-                    lat: -33.042476,
-                    lng: 146.422921
-                }}>
-                    {allPolygonCoords.map((poly) => <Polygon
-                            key={poly.lgId}
+                    initialCenter={this.props.mapCenter}
+                    center={this.props.mapCenter}
+                    >
+                    {
+                        allPolygonCoords.map((poly) => <Polygon
+                        key={poly.lgId}
                             paths={poly.formattedCoords}
                             strokeColor={this.getRandomColor()}
                             strokeOpacity={0.3}
                             strokeWeight={1}
                             fillColor={this.getRandomColor()}
-                            fillOpacity={0.5}/>)}
+                            fillOpacity={0.5}
+                            tag={poly.properties}
+                            onClick={this.props.onMapClicked}
+                            />
+                        )
+                    }
                 </Map>
             </Segment>
         )
