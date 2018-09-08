@@ -13,8 +13,10 @@ class App extends Component {
 
   onMapClicked = (poly) => {
     this.setState({
-      lgaName: poly.tag.nsw_lga__2
+      lgaName: poly.tag.nsw_lga__2,
+      selectedLga: poly.tag.lg_ply_pid,
     })
+
     const bounds = new poly.google.maps.LatLngBounds()
     for (let i in poly.paths) {
       const point = poly.paths[i]
@@ -39,6 +41,7 @@ class App extends Component {
             <Grid.Column width={9} className='map-container'>
               <HealthMap
                 mapCenter={this.state.searchedLocation}
+                selectedLga={this.state.selectedLga}
                 onMapClicked={this.onMapClicked}
                 style={{height: '100%'}}
               />

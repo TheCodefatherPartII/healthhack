@@ -5,6 +5,7 @@ import {Segment} from 'semantic-ui-react';
 import axios from 'axios';
 
 import mockCoords from '../simpleLgaRegions.json'
+import { Marker } from 'google-maps-react/dist/components/Marker';
 
 class HealthMap extends React.Component {
   static defaultProps = {
@@ -15,16 +16,25 @@ class HealthMap extends React.Component {
   }
   
     state = {
-        allPolygonCoords: []
+        hospitals: [],
+        allPolygonCoords: [],
+        polyColour: {},
     }
+
     componentDidMount = () => {
+        const coords = this.getFeatureIds(mockCoords.features)
+        this.setState({
+          allPolygonCoords: coords,
+          polyColour: coords.reduce((agg,cur) => ({
+            ...agg,
+            [cur.lgId]: this.getRandomColor()
+          }), {}),
+        })
+
         axios
-            .get(`https://data.gov.au/geoserver/nsw-local-government-areas/wfs?request=GetFeature&typeName=ckan_f6a00643_1842_48cd_9c2f_df23a3a1dc1e&outputFormat=json`)
+            .get('http://healthhackaus.herokuapp.com/api/healthhack/hospitals')
             .then(res => {
-                const coords = res.data;
-                const {features} = coords
-                let allPolygonCoords = this.getFeatureIds(features)
-                this.setState({allPolygonCoords});
+              this.setState({hospitals: res.data})
             })
     }
 
@@ -53,8 +63,8 @@ class HealthMap extends React.Component {
     }
 
     render() {
-        const allPolygonCoords = this.state.allPolygonCoords
-        const anim = { animation: 'pulse', duration: 1000, visible1: true}
+        const {allPolygonCoords, polyColour, hospitals} = this.state
+
         return (
             <Segment
                 padded={false}
@@ -70,19 +80,31 @@ class HealthMap extends React.Component {
                     center={this.props.mapCenter}
                     >
                     {
-                        allPolygonCoords.map((poly) => <Polygon
-                        key={poly.lgId}
+                        allPolygonCoords.map((poly) => {
+                          const selected = poly.lgId === this.props.selectedLga
+                          const colour = polyColour[poly.lgId]
+                          return <Polygon
+                            key={poly.lgId+`${selected?'-selected':''}`}
                             paths={poly.formattedCoords}
-                            strokeColor={this.getRandomColor()}
-                            strokeOpacity={0.3}
-                            strokeWeight={1}
-                            fillColor={this.getRandomColor()}
-                            fillOpacity={0.5}
+                            strokeColor={colour}
+                            strokeOpacity={0.7}
+                            strokeWeight={selected ? 2 : 1}
+                            fillColor={colour}
+                            fillOpacity={selected ? 0.8 : 0.4}
                             tag={poly.properties}
                             onClick={this.props.onMapClicked}
-                            />
+                          />
+                        }
                         )
                     }
+                    {hospitals.map(h => <Marker
+                      key={`hospital:${h.lat}|${h.lng}`}
+                      icon={{
+                        url: '/hospital.png',
+                        scaledSize: new this.props.google.maps.Size(25, 25)
+                      }}
+                      position={{lat: h.lat, lng: h.lng}}
+                    />)}
                 </Map>
             </Segment>
         )
