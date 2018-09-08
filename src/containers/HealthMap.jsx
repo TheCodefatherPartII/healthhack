@@ -58,7 +58,7 @@ class HealthMap extends React.Component {
         console.log("coords : " + features)
         return (
             <Segment
-                attached
+
                 padded={false}
                 style={{
                 height: '100%',
@@ -75,10 +75,10 @@ class HealthMap extends React.Component {
                     <Polygon
                         paths={this.getFeatureIds(features)}
                         strokeColor="#0000FF"
-                        strokeOpacity={0.8}
-                        strokeWeight={2}
+                        strokeOpacity={0.3}
+                        strokeWeight={1}
                         fillColor="#0000FF"
-                        fillOpacity={0.35}/>
+                        fillOpacity={0.2}/>
                 </Map>
             </Segment>
 
