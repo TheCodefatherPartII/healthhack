@@ -1,9 +1,41 @@
 import React from 'react';
 import {Map, GoogleApiWrapper, HeatMap, Polygon} from 'google-maps-react';
 import {Segment} from 'semantic-ui-react';
-import mockPolygonData from '../mock/polygonData.json';
+//import * as kiamaCoords from '../constants/lgaPolygons'
+import axios from 'axios';
 
 class HealthMap extends React.Component {
+    state = {
+        coords: {}
+    }
+    componentDidMount() {
+        axios
+            .get(`https://data.gov.au/geoserver/nsw-local-government-areas/wfs?request=GetFeature&typeName=ckan_f6a00643_1842_48cd_9c2f_df23a3a1dc1e&outputFormat=json`)
+            .then(res => {
+                const coords = res.data;
+                this.setState({coords});
+            })
+    }
+
+    getFeatureIds(features) {
+        let allCoords = []
+        if (features !== undefined) {
+            features.map((feature) => {
+                const {geometry} = feature
+                const {coordinates} = geometry
+                allCoords.push(this.getFormattedCoords(coordinates[0][0]))
+            })
+        }
+        return allCoords
+    }
+
+    getFormattedCoords(coordinates) {
+        let formattedCoords = []
+        coordinates.map((coord) => {
+            formattedCoords.push({lat: coord[1], lng: coord[0]})
+        })
+        return formattedCoords
+    }
     render() {
         const gradient = [
             'rgba(0, 255, 255, 0)',
@@ -22,13 +54,14 @@ class HealthMap extends React.Component {
             'rgba(255, 0, 0, 1)'
         ];
 
-
         const positions = [
             {
                 lat: -33.042476,
                 lng: 146.422921
             }
         ];
+        const {features} = this.state.coords
+        console.log("coords : " + features)
         return (
             <Segment
                 attached
@@ -46,14 +79,12 @@ class HealthMap extends React.Component {
                     lng: 146.422921
                 }}>
                     <Polygon
-                        onClick={this.props.onMapClicked}
-                        paths={mockPolygonData}
+                        paths={this.getFeatureIds(features)}
                         strokeColor="#0000FF"
                         strokeOpacity={0.8}
                         strokeWeight={2}
                         fillColor="#0000FF"
                         fillOpacity={0.35}/>
-                    <HeatMap gradient={gradient} opacity={0.3} positions={positions} radius={20}/>
                 </Map>
             </Segment>
 
