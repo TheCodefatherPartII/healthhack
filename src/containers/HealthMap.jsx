@@ -4,17 +4,11 @@ import {Segment} from 'semantic-ui-react';
 //import * as kiamaCoords from '../constants/lgaPolygons'
 import axios from 'axios';
 
+import mockCoords from '../simpleLgaRegions.json'
+
 class HealthMap extends React.Component {
     state = {
-        coords: {}
-    }
-    componentDidMount() {
-        axios
-            .get(`https://data.gov.au/geoserver/nsw-local-government-areas/wfs?request=GetFeature&typeName=ckan_f6a00643_1842_48cd_9c2f_df23a3a1dc1e&outputFormat=json`)
-            .then(res => {
-                const coords = res.data;
-                this.setState({coords});
-            })
+        coords: mockCoords
     }
 
     getFeatureIds(features) {
