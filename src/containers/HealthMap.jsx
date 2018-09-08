@@ -1,6 +1,6 @@
 import React from 'react';
-import {Map, GoogleApiWrapper, HeatMap, Polygon} from 'google-maps-react';
-import {Segment, Button} from 'semantic-ui-react';
+import {Map, GoogleApiWrapper, Polygon} from 'google-maps-react';
+import {Segment} from 'semantic-ui-react';
 //import * as kiamaCoords from '../constants/lgaPolygons'
 import axios from 'axios';
 
@@ -15,7 +15,7 @@ class HealthMap extends React.Component {
             .get(`https://data.gov.au/geoserver/nsw-local-government-areas/wfs?request=GetFeature&typeName=ckan_f6a00643_1842_48cd_9c2f_df23a3a1dc1e&outputFormat=json`)
             .then(res => {
                 const coords = res.data;
-                const { features } = coords
+                const {features} = coords
                 let allPolygonCoords = this.getFeatureIds(features)
                 this.setState({allPolygonCoords});
             })
@@ -41,24 +41,13 @@ class HealthMap extends React.Component {
         return {lgId, formattedCoords}
     }
 
+    getRandomColor() {
+        return '#' + Math.floor(Math.random() * 16777215).toString(16);
+    }
+
     render() {
-        const gradient = [
-            'rgba(0, 255, 255, 0)',
-            'rgba(0, 255, 255, 1)',
-            'rgba(0, 191, 255, 1)',
-            'rgba(0, 127, 255, 1)',
-            'rgba(0, 63, 255, 1)',
-            'rgba(0, 0, 255, 1)',
-            'rgba(0, 0, 223, 1)',
-            'rgba(0, 0, 191, 1)',
-            'rgba(0, 0, 159, 1)',
-            'rgba(0, 0, 127, 1)',
-            'rgba(63, 0, 91, 1)',
-            'rgba(127, 0, 63, 1)',
-            'rgba(191, 0, 31, 1)',
-            'rgba(255, 0, 0, 1)'
-        ];
         const allPolygonCoords = this.state.allPolygonCoords
+        const anim = { animation: 'pulse', duration: 1000, visible1: true}
         return (
             <Segment
                 padded={false}
@@ -73,22 +62,17 @@ class HealthMap extends React.Component {
                     initialCenter={{
                     lat: -33.042476,
                     lng: 146.422921
-                    }}>
-                    {
-                        allPolygonCoords.map((poly) => <Polygon
-                        key={poly.lgId}
+                }}>
+                    {allPolygonCoords.map((poly) => <Polygon
+                            key={poly.lgId}
                             paths={poly.formattedCoords}
-                            strokeColor="#0000FF"
+                            strokeColor={this.getRandomColor()}
                             strokeOpacity={0.3}
                             strokeWeight={1}
-                            fillColor={"#0000FF"}
-                            fillOpacity={0.2}/>
-                        )
-                    }
-                    
+                            fillColor={this.getRandomColor()}
+                            fillOpacity={0.5}/>)}
                 </Map>
             </Segment>
-
         )
     }
 }
