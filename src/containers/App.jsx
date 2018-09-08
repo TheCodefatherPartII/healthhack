@@ -23,12 +23,13 @@ class App extends Component {
       <Container fluid style={{height: '100%'}}>
         <Header onSuburbSelected={this.onSuburbSelected}/>
         <Grid>
-          <Grid.Row>
-            <Grid.Column width={9}>
-              <HealthMap onMapClicked={this.onMapClicked} style={{height: '100%'}} />
+          <Grid.Row style={{height: '100%'}}>
+            <Grid.Column width={9} className='map-container'>
+              <HealthMap
+                onMapClicked={this.onMapClicked} style={{height: '100%'}} />
             </Grid.Column>
             <Grid.Column width={7}>
-        <DetailsPanel visible={this.state.visible} style={{height: '100%'}} />
+        <DetailsPanel visible={this.state.visible}/>
             </Grid.Column>
           </Grid.Row>
         </Grid>

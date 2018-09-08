@@ -3,11 +3,9 @@ import { connect } from 'react-redux'
 
 import {
   Header,
-  Grid,
   Segment,
   List,
   ListItem,
-  Sidebar,
   Icon,
   Label,
   Tab,
@@ -45,7 +43,7 @@ class DetailsPanel extends React.Component {
     );
   }
 
-  renderContactDetails() {
+  renderContactDetails = () => {
     return (
       <Table>
         <Table.Body>
@@ -70,13 +68,13 @@ class DetailsPanel extends React.Component {
         </Table.Body>
       </Table>
     );
-  }
+  };
+
   render() {
     const panes = [
       { menuItem: 'Information', render: this.renderStatistics },
-      { menuItem: 'Contacts', render: this.renderContactDetails },
-    ]
-
+      { menuItem: 'Contacts', render: this.renderContactDetails }
+      ];
 
     return (
       <Tab menu={{ secondary: true }} panes={panes}/>
@@ -86,6 +84,6 @@ class DetailsPanel extends React.Component {
 
 const mapStateToProps = ({indicators}) => ({
   indicators,
-})
+});
 
 export default connect(mapStateToProps)(DetailsPanel);
