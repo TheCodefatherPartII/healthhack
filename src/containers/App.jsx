@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { Container } from 'semantic-ui-react';
-import Shell from './Shell/Shell';
+import Header from './Header/Header';
 
 class App extends Component {
   render() {
     return (
       <Container>
-      <Shell/>
+        <Header/>
+
       </Container>
     );
   }

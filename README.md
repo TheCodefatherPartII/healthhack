@@ -38,7 +38,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Adding a Router](#adding-a-router)
 - [Adding Custom Environment Variables](#adding-custom-environment-variables)
   - [Referencing Environment Variables in the HTML](#referencing-environment-variables-in-the-html)
-  - [Adding Temporary Environment Variables In Your Shell](#adding-temporary-environment-variables-in-your-shell)
+  - [Adding Temporary Environment Variables In Your Header](#adding-temporary-environment-variables-in-your-shell)
   - [Adding Development Environment Variables In `.env`](#adding-development-environment-variables-in-env)
 - [Can I Use Decorators?](#can-i-use-decorators)
 - [Fetching Data with AJAX Requests](#fetching-data-with-ajax-requests)
@@ -919,7 +919,7 @@ Note that the caveats from the above section apply:
 * Apart from a few built-in variables (`NODE_ENV` and `PUBLIC_URL`), variable names must start with `REACT_APP_` to work.
 * The environment variables are injected at build time. If you need to inject them at runtime, [follow this approach instead](#generating-dynamic-meta-tags-on-the-server).
 
-### Adding Temporary Environment Variables In Your Shell
+### Adding Temporary Environment Variables In Your Header
 
 Defining environment variables can vary between OSes. It’s also important to know that this manner is temporary for the
 life of the shell session.
