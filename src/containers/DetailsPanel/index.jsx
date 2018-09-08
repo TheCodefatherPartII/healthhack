@@ -8,7 +8,6 @@ import {
   Sidebar,
   Icon,
   Label,
-  Button,
 } from 'semantic-ui-react';
 
 class DetailsPanel extends React.Component {
