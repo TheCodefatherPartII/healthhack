@@ -93,29 +93,29 @@ class DetailsPanel extends React.Component {
             <Table.Body>
               <Table.Row>
                 <Table.Cell>
-                  <Icon name="home" />
+                  <Icon name="user  " />
                   &nbsp; Name
                 </Table.Cell>
                 <Table.Cell>
-                  <Input />
+                  <Input className="petitions__input" />
                 </Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.Cell>
-                  <Icon name="user" />
+                  <Icon name="mail square" />
                   &nbsp; Email
                 </Table.Cell>
                 <Table.Cell>
-                  <Input />
+                  <Input className="petitions__input" />
                 </Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.Cell>
-                  <Icon name="phone" />
+                  <Icon name="users" />
                   &nbsp; Petition
                 </Table.Cell>
                 <Table.Cell>
-                  <TextArea />
+                  <TextArea className="petitions__input" />
                 </Table.Cell>
               </Table.Row>
             </Table.Body>

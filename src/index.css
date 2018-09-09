@@ -10,3 +10,7 @@
 .map-container > div {
   height: 100%;
 }
+
+.petitions__input {
+  width: 100%;
+}
