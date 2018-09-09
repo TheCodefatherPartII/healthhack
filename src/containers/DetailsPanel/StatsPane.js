@@ -186,8 +186,8 @@ class StatsPane extends React.Component {
 
     renderSelectedLgaCrime(selectedLgaCrimeData) {
         return <Pie
-            height={500}
-            width={750}
+            height={380}
+            width={800}
             data={selectedLgaCrimeData}
             margin={{
             "top": 40,
