@@ -45,39 +45,48 @@ class DetailsPanel extends React.Component {
 
   renderContactDetails = () => {
     return (
-      <Table>
-        <Table.Body>
-          <Table.Row>
-            <Table.Cell>
-              <Icon name="home" />
-              &nbsp; Council:
-            </Table.Cell>
-            <Table.Cell>Dubbo Regional Council</Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>
-              <Icon name="user" />
-              &nbsp; Mayor:
-            </Table.Cell>
-            <Table.Cell>Leigh Walker</Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>
-              <Icon name="phone" />
-              &nbsp; Phone Number:
-            </Table.Cell>
-            <Table.Cell>
-              <a href="tel:0268014000">02 6801 4000</a>
-            </Table.Cell>
-          </Table.Row>
-        </Table.Body>
-      </Table>
+      <div>
+        <p>
+        These are the details of your local MP. Start a communication channel and raise your concerns.
+        </p>
+        <Table>
+          <Table.Body>
+            <Table.Row>
+              <Table.Cell>
+                <Icon name="home" />
+                &nbsp; Council:
+              </Table.Cell>
+              <Table.Cell>Dubbo Regional Council</Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell>
+                <Icon name="user" />
+                &nbsp; Mayor:
+              </Table.Cell>
+              <Table.Cell>Leigh Walker</Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell>
+                <Icon name="phone" />
+                &nbsp; Phone Number:
+              </Table.Cell>
+              <Table.Cell>
+                <a href="tel:0268014000">02 6801 4000</a>
+              </Table.Cell>
+            </Table.Row>
+          </Table.Body>
+        </Table>
+      </div>
     );
   };
 
   renderPetitionsDetails = () => {
     return (
       <div>
+        <p>
+        CouncilPlus allows you to create or support other neighbours' petitions to improve your Council or Local Government Area. 
+        Create or sign one. The power of the community resides in the general awareness and consequent action!
+        </p>
         <Segment>
           <Header>Create a Petition</Header>
           <Table>
@@ -87,14 +96,18 @@ class DetailsPanel extends React.Component {
                   <Icon name="home" />
                   &nbsp; Name
                 </Table.Cell>
-                <Table.Cell><Input /></Table.Cell>
+                <Table.Cell>
+                  <Input />
+                </Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.Cell>
                   <Icon name="user" />
                   &nbsp; Email
                 </Table.Cell>
-                <Table.Cell><Input /></Table.Cell>
+                <Table.Cell>
+                  <Input />
+                </Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.Cell>
