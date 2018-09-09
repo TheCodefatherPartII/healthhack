@@ -17,6 +17,8 @@ class HealthMap extends React.Component {
   
     state = {
         hospitals: [],
+        childCares: [],
+        schools: [],
         allPolygonCoords: [],
         polyColour: {},
     }
@@ -31,11 +33,26 @@ class HealthMap extends React.Component {
           }), {}),
         })
 
-        axios
-            .get('http://healthhackaus.herokuapp.com/api/healthhack/hospitals')
+        // get hospitals
+        axios.get('http://healthhackaus.herokuapp.com/api/healthhack/hospitals')
             .then(res => {
               this.setState({hospitals: res.data})
             })
+
+        // get childcares
+        axios.get('http://healthhackaus.herokuapp.com/api/healthhack/childcare')
+        .then(res => {
+            console.log(res.data)
+            this.setState({childCares: res.data})
+        })
+
+        // get schools.
+        axios.get('http://healthhackaus.herokuapp.com/api/healthhack/publicSchools')
+        .then(res => {
+            console.log(res.data)
+            this.setState({schools: res.data})
+        })
+
     }
 
     getFeatureIds(features) {
@@ -62,9 +79,41 @@ class HealthMap extends React.Component {
         return '#' + Math.floor(Math.random() * 16777215).toString(16);
     }
 
-    render() {
-        const {allPolygonCoords, polyColour, hospitals} = this.state
+    drawHospitalMarkers(hospitals) {
+        return hospitals.map(h => <Marker
+            key={`hospital:${h.lat}|${h.lng}`}
+            icon={{
+              url: '/hospital.png',
+              scaledSize: new this.props.google.maps.Size(25, 25)
+            }}
+            position={{lat: h.lat, lng: h.lng}}
+          />)
+    }
 
+    drawSchoolMarkers(schools) {
+        return schools.map(h => <Marker
+            key={`school:${h.lat}|${h.lng}`}
+            icon={{
+              url: '/school.png',
+              scaledSize: new this.props.google.maps.Size(25, 25)
+            }}
+            position={{lat: h.lat, lng: h.lng}}
+          />)
+    }
+
+    drawChildCareMarkers(childCares) {
+        return childCares.map(h => <Marker
+            key={`childcare:${h.lat}|${h.lng}`}
+            icon={{
+              url: '/childCare.png',
+              scaledSize: new this.props.google.maps.Size(25, 25)
+            }}
+            position={{lat: h.lat, lng: h.lng}}
+          />)
+    }
+
+    render() {
+        const {allPolygonCoords, polyColour, hospitals, childCares, schools} = this.state
         return (
             <Segment
                 padded={false}
@@ -97,14 +146,9 @@ class HealthMap extends React.Component {
                         }
                         )
                     }
-                    {hospitals.map(h => <Marker
-                      key={`hospital:${h.lat}|${h.lng}`}
-                      icon={{
-                        url: '/hospital.png',
-                        scaledSize: new this.props.google.maps.Size(25, 25)
-                      }}
-                      position={{lat: h.lat, lng: h.lng}}
-                    />)}
+                    {this.drawHospitalMarkers(hospitals)}
+                    {this.drawSchoolMarkers(schools)}
+                    {this.drawChildCareMarkers(childCares)}
                 </Map>
             </Segment>
         )
