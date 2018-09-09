@@ -145,7 +145,7 @@ class DetailsPanel extends React.Component {
                     <span className="date">Created in 2018</span>
                   </Card.Meta>
                   <Card.Description>
-                    Maintain funding for Council station
+                    Maintain funding for station
                   </Card.Description>
                 </Card.Content>
                 <Card.Content extra>
