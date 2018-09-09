@@ -6,6 +6,7 @@ import Header from '../components/Header/Header';
 import HealthMap from './HealthMap'
 import DetailsPanel from './DetailsPanel';
 import DataService from '../services/DataService';
+import FilterService from '../services/FilterService';
 
 class App extends Component {
   state = {
@@ -36,13 +37,21 @@ class App extends Component {
   }
 
   onMapClicked = (poly) => {
-
-    this.setState({
-      lgaName: poly.tag.nsw_lga__2,
-      selectedLga: poly.tag.lg_ply_pid,
-      selectedLgaId: poly.tag.lga_pid,
-      selectedLgaStats: poly.tag.services
-    })
+    FilterService.getServicesInBounds(
+      poly.google.maps,
+      this.state.services,
+      new poly.google.maps.Polygon({paths: poly.paths})
+    ).then(selectedServices =>
+      this.setState({
+        lgaName: poly.tag.nsw_lga__2,
+        selectedLga: poly.tag.lg_ply_pid,
+        selectedLgaId: poly.tag.lga_pid,
+        selectedLgaStats: selectedServices.reduce((agg, cur) => ({
+          ...agg,
+          [cur.serviceType]: (agg[cur.serviceType] || 0) + 1
+        }), {}),
+      })
+    )
   }
   
   onSuburbSelected = (place) => {

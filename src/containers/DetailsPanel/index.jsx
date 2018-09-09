@@ -40,9 +40,51 @@ class DetailsPanel extends React.Component {
       l => l.ORGNAME.trim().toUpperCase() === lgaName
     );
 
-    console.log(lga);
-
     if (lga) this.setState({ lga });
+  }
+
+  renderStatistics = () => {
+    console.log(this.state.lga);
+
+    const population = parseInt(this.state.lga.POPULATION, 10);
+    return (
+      <div>
+        <Message
+          info
+          icon="map marker alternate"
+          header={this.state.lga.ORGNAME}
+          content={
+            !Number.isNaN(population) ? population + " residents" : undefined
+          }
+        />
+
+        <Segment>
+          <Header>Indicators</Header>
+          <List>
+            {["wheelchair"].map(ind => (
+              <ListItem key={ind}>
+                <Label image>
+                  <Icon circular name={ind} />
+                  {ind} = {(Math.random() * 100).toFixed(0)}%
+                </Label>
+              </ListItem>
+            ))}
+          </List>
+        </Segment>
+        <Segment>
+          <Header>Available Services</Header>
+          <List>
+            {Object.keys(this.props.selectedLgaStats).map(service => (
+              <ListItem key={service} image>
+                <img src={`./${service}.png`} style={{verticalAlign: 'middle'}} />
+                {' '}
+                {this.props.selectedLgaStats[service]} {service.replace('childcare', 'childcare centre')}s
+              </ListItem>
+            ))}
+          </List>
+        </Segment>
+      </div>
+    );
   };
 
   componentDidMount() {

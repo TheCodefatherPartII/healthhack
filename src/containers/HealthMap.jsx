@@ -5,7 +5,6 @@ import Loadable from 'react-loading-overlay';
 
 import mockCoords from '../simpleLgaRegions.json'
 import { Marker } from 'google-maps-react/dist/components/Marker';
-import DataService from '../services/DataService';
 import FilterService from '../services/FilterService';
 
 class HealthMap extends React.Component {
