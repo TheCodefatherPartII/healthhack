@@ -1,9 +1,65 @@
 import React from 'react';
-import { Header, Icon, Label, Grid, List, ListItem, Message, Segment } from "semantic-ui-react";
+import { Header, Icon, Label, Table, List, ListItem, Message, Segment } from "semantic-ui-react";
 import { Bar } from "@nivo/bar";
 
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function ordinal_suffix_of(i) {
+  var j = i % 10,
+    k = i % 100;
+  if (j == 1 && k != 11) {
+    return i + "st";
+  }
+  if (j == 2 && k != 12) {
+    return i + "nd";
+  }
+  if (j == 3 && k != 13) {
+    return i + "rd";
+  }
+  return i + "th";
+}
+
 class DetailsPane extends React.Component {
+  renderStats() {
+    const stats = [
+      { icon: 'ambulance', name: 'Health Services'},
+      { icon: 'user secret', name: 'Crime Rate'},
+      { icon: 'book', name: 'Education' },
+    ];
+
+    return stats.map(s => {
+      const rank = getRandomInt(1, 35);
+      let colour;
+
+      if (rank <= 10) colour = 'green';
+      else if (rank <= 15) colour = undefined;
+      else if (rank <= 25) colour = 'orange';
+      else if (rank <= 35) colour = 'red';
+
+      return (
+        <Table.Row style={{color: colour}}>
+          <Table.Cell>
+            <Icon name={s.icon}/>
+          </Table.Cell>
+
+          <Table.Cell>
+            <strong>{s.name}</strong>
+          </Table.Cell>
+          <Table.Cell>
+            {ordinal_suffix_of(rank)} state-wide
+          </Table.Cell>
+
+          <Table.Cell style={{textAlign: 'right'}}>
+            <Icon name={'arrow alternate circle ' + (rank % 2 ? 'up' : 'down') }/>
+          </Table.Cell>
+        </Table.Row>
+      );
+    });
+  }
   render() {
+
     const population = parseInt(this.props.lga.POPULATION, 10);
     return (
       <div>
@@ -17,47 +73,24 @@ class DetailsPane extends React.Component {
             : undefined}
           attached="top"
         />
-          <Segment attached>
-            <Grid>
-            <Grid.Row columns={16}>
-              <Grid.Column width={1}>
-                <Icon name="ambulance"/>
-              </Grid.Column>
-              <Grid.Column width={7}>
-                <strong>Health Services:</strong>
-              </Grid.Column>
-              <Grid.Column width={7}>
-                8th state-wide
-              </Grid.Column>
-              <Grid.Column width={1}>
-                <Icon name='arrow alternate circle up'/>
-              </Grid.Column>
-            </Grid.Row>
-            </Grid>
-          </Segment>
-          <Segment attached>
-            wowowfklsdslk;a
-          </Segment>
+        <Table attached>
+          <Table.Body>
+            {this.renderStats()}
+          </Table.Body>
+        </Table>
 
-        <Segment>
-          <Header>Indicators</Header>
-          <List>
-            {["wheelchair"].map(ind => (
-              <ListItem key={ind}>
-                <Label image>
-                  <Icon circular name={ind} />
-                  {ind} = {(Math.random() * 100).toFixed(0)}%
-                </Label>
-              </ListItem>
-            ))}
-          </List>
-        </Segment>
         <Segment>
           <Header>Available Services</Header>
           <List>
-            {["Hospitals", "General practices"].map(ind => (
-              <ListItem key={ind}>{ind}</ListItem>
-            ))}
+            {
+              Object.keys(this.props.selectedLgaStats).map(type =>
+                <ListItem image>
+                  <img src={`/${type}.png`} style={{verticalAlign: 'middle'}} />
+                  {' '}
+                  {this.props.selectedLgaStats[type]} {type.replace('childcare', 'childcare centre')}s
+                </ListItem>
+              )
+            }
           </List>
         </Segment>
       </div>

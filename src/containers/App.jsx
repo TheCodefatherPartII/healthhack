@@ -36,10 +36,11 @@ class App extends Component {
   }
 
   onMapClicked = (poly) => {
+
     this.setState({
       lgaName: poly.tag.nsw_lga__2,
       selectedLga: poly.tag.lg_ply_pid,
-      selectedLgaId: poly.tag.nsw_lga__3,
+      selectedLgaId: poly.tag.lga_pid,
       selectedLgaStats: poly.tag.services
     })
   }
@@ -52,7 +53,6 @@ class App extends Component {
 
   render() {
     if (!this.props.scriptsLoadedSuccessfully) return null;
-
     return (
       <Container fluid style={{height: '100%'}}>
         <Header onSuburbSelected={this.onSuburbSelected}/>
