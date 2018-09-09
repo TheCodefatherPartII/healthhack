@@ -16,14 +16,8 @@ class App extends Component {
       lgaName: poly.tag.nsw_lga__2,
       selectedLga: poly.tag.lg_ply_pid,
     })
-
-    const bounds = new poly.google.maps.LatLngBounds()
-    for (let i in poly.paths) {
-      const point = poly.paths[i]
-      bounds.extend(new poly.google.maps.LatLng(point.lat, point.lng));
-    }
-    this.onSuburbSelected({geometry: {location: bounds.getCenter()}})
   }
+  
   onSuburbSelected = (place) => {
     this.setState({
       searchedLocation: place.geometry.location
