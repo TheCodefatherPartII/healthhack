@@ -32,9 +32,15 @@ class DetailsPane extends React.Component {
         <Segment>
           <Header>Available Services</Header>
           <List>
-            {["Hospitals", "General practices"].map(ind => (
-              <ListItem key={ind}>{ind}</ListItem>
-            ))}
+            {
+              Object.keys(this.props.selectedLgaStats).map(type => 
+                <ListItem image>
+                  <img src={`/${type}.png`} style={{verticalAlign: 'middle'}} />
+                  {' '}
+                  {this.props.selectedLgaStats[type]} {type.replace('childcare', 'childcare centre')}s
+                </ListItem>
+              )
+            }
           </List>
         </Segment>
       </div>

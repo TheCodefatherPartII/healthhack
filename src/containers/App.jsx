@@ -39,6 +39,7 @@ class App extends Component {
     this.setState({
       lgaName: poly.tag.nsw_lga__2,
       selectedLga: poly.tag.lg_ply_pid,
+      selectedLgaId: poly.tag.nsw_lga__3,
       selectedLgaStats: poly.tag.services
     })
   }
