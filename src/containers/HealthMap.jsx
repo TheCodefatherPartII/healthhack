@@ -150,7 +150,8 @@ class LoadingWrapper extends React.Component {
       hospitals,
       childcare,
       schools,
-      crime
+      crime,
+      contactDetails
     ] = await new DataService().loadMappableData()
 
     this.setState({

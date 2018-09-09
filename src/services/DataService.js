@@ -44,7 +44,8 @@ export default class DataService {
       this.getHospitals(),
       this.getChildcare(),
       this.getSchools(),
-      this.getCrime()
+      this.getCrime(),
+      this.getContactDetails()
     ])
   }
 

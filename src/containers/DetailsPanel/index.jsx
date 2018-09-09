@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import * as lgaDetails from '../../constants/contactDetails';
+import DataService  from '../../services/DataService';
 
 import {
   Input,
@@ -23,12 +23,19 @@ import {
 class DetailsPanel extends React.Component {
   state = { };
 
+  componentDidMount = () => {
+    const service = new DataService();
+
+    service.getContactDetails()
+      .then(lgaDetails => this.setState({ lgaDetails }));
+  };
+
   componentWillUpdate(previousProps) {
     if (this.props === previousProps || !this.props.lgaName) return;
 
     const lgaName = this.props.lgaName.trim().toUpperCase();
 
-    const lga = lgaDetails.find(
+    const lga = this.state.lgaDetails.find(
       l => l.ORGNAME.trim().toUpperCase() === lgaName
     );
 
