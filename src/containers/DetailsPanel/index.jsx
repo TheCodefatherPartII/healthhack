@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import * as lgaDetails from '../../constants/contactDetails';
 
 import {
   Input,
@@ -13,15 +14,44 @@ import {
   Table,
   TextArea,
   Button,
+  Message,
   Card,
   Image,
   Grid
 } from "semantic-ui-react";
 
 class DetailsPanel extends React.Component {
-  renderStatistics() {
+  state = { };
+
+  componentWillUpdate(previousProps) {
+    if (this.props === previousProps || !this.props.lgaName) return;
+
+    const lgaName = this.props.lgaName.trim().toUpperCase();
+
+    const lga = lgaDetails.find(
+      l => l.ORGNAME.trim().toUpperCase() === lgaName
+    );
+
+    console.log(lga);
+
+    if (lga)
+      this.setState({ lga });
+  }
+  renderStatistics = () => {
+    console.log(this.state.lga);
+
+    const population = parseInt(this.state.lga.POPULATION, 10);
     return (
       <div>
+        <Message
+          info
+          icon='map marker alternate'
+          header={this.state.lga.ORGNAME}
+          content={!Number.isNaN(population)
+            ? population + ' residents'
+            : undefined}
+        />
+
         <Segment>
           <Header>Indicators</Header>
           <List>
@@ -48,6 +78,14 @@ class DetailsPanel extends React.Component {
   }
 
   renderContactDetails = () => {
+    const {
+      ORGNAME,
+      MAYOR_SAL,
+      MAYOR_FIRST,
+      MAYOR_LAST,
+      PHONE
+    } = this.state.lga;
+
     return (
       <div>
         <p>
@@ -61,14 +99,14 @@ class DetailsPanel extends React.Component {
                 <Icon name="home" />
                 &nbsp; Council:
               </Table.Cell>
-              <Table.Cell>Dubbo Regional Council</Table.Cell>
+              <Table.Cell>{ORGNAME}</Table.Cell>
             </Table.Row>
             <Table.Row>
               <Table.Cell>
                 <Icon name="user" />
                 &nbsp; Mayor:
               </Table.Cell>
-              <Table.Cell>Leigh Walker</Table.Cell>
+              <Table.Cell>{[MAYOR_SAL, MAYOR_FIRST, MAYOR_LAST].join(' ')}</Table.Cell>
             </Table.Row>
             <Table.Row>
               <Table.Cell>
@@ -76,7 +114,7 @@ class DetailsPanel extends React.Component {
                 &nbsp; Phone Number:
               </Table.Cell>
               <Table.Cell>
-                <a href="tel:0268014000">02 6801 4000</a>
+                <a href={"tel:" + PHONE.replace(' ', '')}>{PHONE}</a>
               </Table.Cell>
             </Table.Row>
           </Table.Body>
@@ -225,6 +263,8 @@ class DetailsPanel extends React.Component {
   };
 
   render() {
+    if (!this.state.lga) return null;
+
     const panes = [
       { menuItem: "Information", render: this.renderStatistics },
       { menuItem: "Contacts", render: this.renderContactDetails },
