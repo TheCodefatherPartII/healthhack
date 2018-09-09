@@ -1,5 +1,5 @@
 ## ❓The problem   
-We're the Codefather team from Terem Technologies. We CouncilPlus we want solve the problem of open source data access regarding the correlation between funding, services and societal outcomes across local governments.   
+We're the Codefather team from Terem Technologies. With CouncilPlus we want solve the problem of open source data access regarding the correlation between funding, services and societal outcomes across local governments.   
 
 Currently, information about government spending by council is fragmented. Each council must submit annual reports which outline their revenue, expenditure and funding. But these reports do not demonstrate how this funding is translated into specific initiatives. Moreover, each state has their own standards of data sharing and comparisons of services across local councils.   
 
