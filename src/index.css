@@ -28,3 +28,6 @@ body {
 .petitions__submit {
   width: 100%;
 }
+._loading-overlay {
+  height: 100%;
+}

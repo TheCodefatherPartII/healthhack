@@ -1,11 +1,12 @@
 import React from 'react';
 import {Map, GoogleApiWrapper, Polygon} from 'google-maps-react';
 import {Segment} from 'semantic-ui-react';
-//import * as kiamaCoords from '../constants/lgaPolygons'
-import axios from 'axios';
+import Loadable from 'react-loading-overlay';
 
 import mockCoords from '../simpleLgaRegions.json'
 import { Marker } from 'google-maps-react/dist/components/Marker';
+import DataService from '../services/DataService';
+import FilterService from '../services/FilterService';
 
 class HealthMap extends React.Component {
   static defaultProps = {
@@ -16,11 +17,10 @@ class HealthMap extends React.Component {
   }
   
     state = {
-        hospitals: [],
-        childCares: [],
-        schools: [],
+        selectedServices: [],
         allPolygonCoords: [],
         polyColour: {},
+        regionBounds: null
     }
 
     componentDidMount = () => {
@@ -32,27 +32,33 @@ class HealthMap extends React.Component {
             [cur.lgId]: this.getRandomColor()
           }), {}),
         })
+    }
 
-        // get hospitals
-        axios.get('http://healthhackaus.herokuapp.com/api/healthhack/hospitals')
-            .then(res => {
-              this.setState({hospitals: res.data})
-            })
+    async componentDidUpdate(prevProps) {
+      const {selectedLga, google, services} = this.props
+      if (selectedLga === prevProps.selectedLga) return
 
-        // get childcares
-        axios.get('http://healthhackaus.herokuapp.com/api/healthhack/childcare')
-        .then(res => {
-            console.log(res.data)
-            this.setState({childCares: res.data})
-        })
+      const selectedRegion = selectedLga ?
+        this.state.allPolygonCoords.find(p => p.lgId === selectedLga) :
+        null
 
-        // get schools.
-        axios.get('http://healthhackaus.herokuapp.com/api/healthhack/publicSchools')
-        .then(res => {
-            console.log(res.data)
-            this.setState({schools: res.data})
-        })
+      if (!selectedRegion) return
+      
+      let selectedServices = []
+        selectedServices = await FilterService.getServicesInBounds(
+          google.maps,
+          services,
+          new google.maps.Polygon({paths: selectedRegion.formattedCoords})
+        )
 
+          
+      const bounds = new google.maps.LatLngBounds()
+      for (let i in selectedRegion.formattedCoords) {
+        const point = selectedRegion.formattedCoords[i]
+        bounds.extend(new google.maps.LatLng(point.lat, point.lng));
+      }
+
+      this.setState({selectedServices, regionBounds: bounds})
     }
 
     getFeatureIds(features) {
@@ -79,83 +85,97 @@ class HealthMap extends React.Component {
         return '#' + Math.floor(Math.random() * 16777215).toString(16);
     }
 
-    drawHospitalMarkers(hospitals) {
-        return hospitals.map(h => <Marker
-            key={`hospital:${h.lat}|${h.lng}`}
-            icon={{
-              url: '/hospital.png',
-              scaledSize: new this.props.google.maps.Size(25, 25)
-            }}
-            position={{lat: h.lat, lng: h.lng}}
-          />)
-    }
-
-    drawSchoolMarkers(schools) {
-        return schools.map(h => <Marker
-            key={`school:${h.lat}|${h.lng}`}
-            icon={{
-              url: '/school.png',
-              scaledSize: new this.props.google.maps.Size(25, 25)
-            }}
-            position={{lat: h.lat, lng: h.lng}}
-          />)
-    }
-
-    drawChildCareMarkers(childCares) {
-        return childCares.map(h => <Marker
-            key={`childcare:${h.lat}|${h.lng}`}
-            icon={{
-              url: '/childCare.png',
-              scaledSize: new this.props.google.maps.Size(25, 25)
-            }}
-            position={{lat: h.lat, lng: h.lng}}
-          />)
-    }
-
     render() {
-        const {allPolygonCoords, polyColour, hospitals, childCares, schools} = this.state
-        return (
-            <Segment
-                padded={false}
-                style={{
-                height: '100%',
-                width: '100%',
-                padding: 0
-            }}>
-                <Map
-                    google={this.props.google}
-                    zoom={7}
-                    initialCenter={this.props.mapCenter}
-                    center={this.props.mapCenter}
-                    >
-                    {
-                        allPolygonCoords.map((poly) => {
-                          const selected = poly.lgId === this.props.selectedLga
-                          const colour = polyColour[poly.lgId]
-                          return <Polygon
-                            key={poly.lgId+`${selected?'-selected':''}`}
-                            paths={poly.formattedCoords}
-                            strokeColor={colour}
-                            strokeOpacity={0.7}
-                            strokeWeight={selected ? 2 : 1}
-                            fillColor={colour}
-                            fillOpacity={selected ? 0.8 : 0.4}
-                            tag={poly.properties}
-                            onClick={this.props.onMapClicked}
-                          />
-                        }
-                        )
-                    }
-                    {this.drawHospitalMarkers(hospitals)}
-                    {this.drawSchoolMarkers(schools)}
-                    {this.drawChildCareMarkers(childCares)}
-                </Map>
-            </Segment>
-        )
+      const { allPolygonCoords, polyColour, selectedServices, regionBounds } = this.state
+      const { google, selectedLga, onMapClicked, mapCenter } = this.props
+
+      return (
+        <Segment
+          padded={false}
+          style={{
+            height: '100%',
+            width: '100%',
+            padding: 0
+          }}>
+          <Map
+            google={google}
+            zoom={7}
+            initialCenter={mapCenter}
+            bounds={regionBounds}
+          >
+            {
+              allPolygonCoords.map((poly) => {
+                const selected = poly.lgId === selectedLga
+                const colour = polyColour[poly.lgId]
+                return <Polygon
+                  key={poly.lgId + `${selected ? '-selected' : ''}`}
+                  paths={poly.formattedCoords}
+                  strokeColor={colour}
+                  strokeOpacity={0.7}
+                  strokeWeight={selected ? 2 : 1}
+                  fillColor={colour}
+                  fillOpacity={selected ? 0.6 : 0.3}
+                  tag={poly.properties}
+                  onClick={onMapClicked}
+                />
+              })
+            }
+            {
+              selectedServices.map(s => <Marker
+                key={`${s.serviceType}:${s.id}`}
+                icon={{
+                  url: `/${s.serviceType}.png`,
+                  scaledSize: new google.maps.Size(25, 25)
+                }}
+                position={{ lat: s.lat, lng: s.lng }}
+              />)
+            }
+          </Map>
+        </Segment>
+
+      )
     }
+}
+
+class LoadingWrapper extends React.Component {
+  state = {
+    loading: true,
+    services: [],
+    crime: []
+  }
+
+  async componentDidMount() {
+    
+    const [
+      hospitals,
+      childcare,
+      schools,
+      crime
+    ] = await new DataService().loadMappableData()
+
+    this.setState({
+      services: [
+        ...hospitals.map(h => ({...h, serviceType: 'hospital'})),
+        ...schools.map(s => ({...s, serviceType: 'school', id: s.schoolCode})),
+        ...childcare.map(c => ({...c, serviceType: 'childcare'})),
+      ],
+      crime,
+      loading: false,
+    })
+  }
+  
+  render() {
+    return <Loadable
+     active={this.state.loading}
+     spinner
+    >
+      <HealthMap {...this.state} {...this.props} />
+    </Loadable>
+  }
 }
 
 export default GoogleApiWrapper({
     apiKey: "AIzaSyBRFyLekDBT0Zh0fF0I2zpcto38orRJ5OA",
-    libraries: ['places', 'visualization']
-})(HealthMap);
+    libraries: ['places', 'visualization'],
+    LoadingContainer: 'div'
+})(LoadingWrapper);
