@@ -150,7 +150,7 @@ class DetailsPanel extends React.Component {
                 </Card.Content>
                 <Card.Content extra>
                   <a>
-                    <Icon name="hand point up outline" />
+                    <Icon name="thumbs up outline" />
                     10,320 Votes
                   </a>
                 </Card.Content>
@@ -170,7 +170,7 @@ class DetailsPanel extends React.Component {
                 </Card.Content>
                 <Card.Content extra>
                   <a>
-                    <Icon name="hand point up outline" />
+                    <Icon name="thumbs up outline" />
                     12,312 Votes
                   </a>
                 </Card.Content>
