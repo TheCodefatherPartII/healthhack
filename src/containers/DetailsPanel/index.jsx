@@ -19,6 +19,7 @@ import {
   Image,
   Grid
 } from "semantic-ui-react";
+import AboutPane from "../../components/About";
 
 class DetailsPanel extends React.Component {
   state = { };
@@ -268,7 +269,7 @@ class DetailsPanel extends React.Component {
   };
 
   render() {
-    if (!this.state.lga) return null;
+    if (!this.state.lga) return <AboutPane/>;
 
     const panes = [
       { menuItem: "Information", render: this.renderStatistics },
