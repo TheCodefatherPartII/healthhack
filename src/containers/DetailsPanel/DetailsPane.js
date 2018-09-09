@@ -39,7 +39,7 @@ class DetailsPane extends React.Component {
       else if (rank <= 35) colour = 'red';
 
       return (
-        <Table.Row>
+        <Table.Row style={{color: colour}}>
           <Table.Cell>
             <Icon name={s.icon}/>
           </Table.Cell>
@@ -51,8 +51,8 @@ class DetailsPane extends React.Component {
             {ordinal_suffix_of(rank)} state-wide
           </Table.Cell>
 
-          <Table.Cell>
-            <Icon name={'arrow alternate circle ' + rank % 2 ? 'up' : 'down' }/>
+          <Table.Cell style={{textAlign: 'right'}}>
+            <Icon name={'arrow alternate circle ' + (rank % 2 ? 'up' : 'down') }/>
           </Table.Cell>
         </Table.Row>
       );
