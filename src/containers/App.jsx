@@ -36,6 +36,7 @@ class App extends Component {
   }
 
   onMapClicked = (poly) => {
+
     this.setState({
       lgaName: poly.tag.nsw_lga__2,
       selectedLga: poly.tag.lg_ply_pid,
