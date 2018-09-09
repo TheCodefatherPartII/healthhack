@@ -22,8 +22,6 @@ class DetailsPanel extends React.Component {
   state = {};
 
   componentDidMount = () => {
-    console.log(this.props, this.state);
-
     const service = new DataService();
 
     service
@@ -44,8 +42,6 @@ class DetailsPanel extends React.Component {
   }
 
   renderStatistics = () => {
-    console.log(this.state.lga);
-
     const population = parseInt(this.state.lga.POPULATION, 10);
     return (
       <div>
@@ -91,9 +87,8 @@ class DetailsPanel extends React.Component {
     this.updateLGA();
   }
 
-  componentWillUpdate(previousProps) {
-    if (this.props !== previousProps || !this.state.lga)
-      this.updateLGA();
+  componentDidUpdate(previousProps) {
+    if (this.props.lgaName !== previousProps.lgaName) this.updateLGA();
   }
 
   render() {

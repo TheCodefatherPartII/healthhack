@@ -31,7 +31,6 @@ class StatsPane extends React.Component {
 
     getSelectedLgaCrimeChartData(selectedLgaId, crimes) {
         const selectedCrimeData = crimes.find((crime) => crime.lgaId === selectedLgaId)
-        console.log(selectedCrimeData)
         return[
             {
                 "id" : "breakIns",
