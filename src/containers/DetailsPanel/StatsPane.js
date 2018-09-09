@@ -301,7 +301,6 @@ class StatsPane extends React.Component {
     render() {
         const crime = this.props.crime;
         const {selectedLgaId} = this.props
-        console.log(this.props)
         const crimeChartData = this
             .getCrimeChartData(crime)
             .slice(1, 15)

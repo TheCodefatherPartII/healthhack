@@ -21,7 +21,7 @@ class Header extends React.Component {
     return (
       <Menu>
         <Menu.Item header>
-          <strong>HealthHack</strong>
+          <strong>CouncilPlus</strong>
         </Menu.Item>
         <Menu.Menu position="right" className='suburb-search'>
           <Menu.Item className='suburb-search'>
