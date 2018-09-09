@@ -4,6 +4,7 @@ import DataService  from '../../services/DataService';
 import {Bar} from '@nivo/bar';
 import PetitionsPane from './Petititons';
 import DetailsPane from './DetailsPane';
+import StatsPane from './StatsPane';
 import {
   Tab,
 } from "semantic-ui-react";
@@ -42,7 +43,8 @@ class DetailsPanel extends React.Component {
     const panes = [
       { menuItem: "Information", render: () => <DetailsPane {...this.state} { ...this.props }/> },
       { menuItem: "Contacts", render: () => <ContactDetails {...this.state}/> },
-      { menuItem: "Petitions", render: () => <PetitionsPane {...this.state}/> }
+      { menuItem: "Petitions", render: () => <PetitionsPane {...this.state}/> },
+      { menuItem: "Stats", render: () => <StatsPane { ...this.props }/> }
     ];
 
     return <Tab menu={{ secondary: true }} panes={panes} />;
