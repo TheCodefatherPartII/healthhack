@@ -173,7 +173,7 @@ class DetailsPanel extends React.Component {
         </Segment>
         <Segment>
           <Header>Current Petitions</Header>
-          <Grid>
+          <Grid className="petitions-grid">
             <Grid.Column key="1" className="petition-wrapperx">
               <Card className="petition">
                 <Image src="https://placeimg.com/640/480/arch" />
@@ -188,7 +188,7 @@ class DetailsPanel extends React.Component {
                 </Card.Content>
                 <Card.Content extra>
                   <a>
-                    <Icon name="hand point up outline" />
+                    <Icon name="thumbs up outline" />
                     10,320 Votes
                   </a>
                 </Card.Content>
@@ -202,13 +202,11 @@ class DetailsPanel extends React.Component {
                   <Card.Meta>
                     <span className="date">Created in 2017</span>
                   </Card.Meta>
-                  <Card.Description>
-                    Keep council secure
-                  </Card.Description>
+                  <Card.Description>Keep council secure</Card.Description>
                 </Card.Content>
                 <Card.Content extra>
                   <a>
-                    <Icon name="hand point up outline" />
+                    <Icon name="thumbs up outline" />
                     12,312 Votes
                   </a>
                 </Card.Content>
