@@ -81,9 +81,11 @@ class DetailsPane extends React.Component {
           </Table.Body>
         </Table>
 
-        <Segment>
-          <Header>Available Services</Header>
-          <Table>
+        <Message
+          header='Available Services'
+          attached="top"
+        />
+          <Table attached='bottom'>
             <Table.Body>
             {
               Object.keys(this.props.selectedLgaStats).map(type =>
@@ -100,7 +102,6 @@ class DetailsPane extends React.Component {
             }
             </Table.Body>
           </Table>
-        </Segment>
       </div>
     );
   }
