@@ -45,3 +45,6 @@ body {
 .petitions-grid {
   justify-content: center;
 }
+.chartSegment {
+  height: 200px;
+}

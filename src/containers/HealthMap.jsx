@@ -137,40 +137,13 @@ class HealthMap extends React.Component {
     }
 }
 
-class LoadingWrapper extends React.Component {
-  state = {
-    loading: true,
-    services: [],
-    crime: []
-  }
-
-  async componentDidMount() {
-    
-    const [
-      hospitals,
-      childcare,
-      schools,
-      crime,
-      contactDetails
-    ] = await new DataService().loadMappableData()
-
-    this.setState({
-      services: [
-        ...hospitals.map(h => ({...h, serviceType: 'hospital'})),
-        ...schools.map(s => ({...s, serviceType: 'school', id: s.schoolCode})),
-        ...childcare.map(c => ({...c, serviceType: 'childcare'})),
-      ],
-      crime,
-      loading: false,
-    })
-  }
-  
+class LoadingWrapper extends React.Component {  
   render() {
     return <Loadable
-     active={this.state.loading}
+     active={this.props.loading}
      spinner
     >
-      <HealthMap {...this.state} {...this.props} />
+      <HealthMap {...this.props} />
     </Loadable>
   }
 }
