@@ -43,3 +43,7 @@ body {
 .ui.grid > .column.petition-wrapperx {
   width: 250px;
 }
+
+.petitions-grid {
+  justify-content: center;
+}
