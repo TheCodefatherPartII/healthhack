@@ -48,3 +48,7 @@ body {
 .chartSegment {
   height: 200px;
 }
+
+.ui.progress:first-child {
+  margin: 0 0 10px 0;
+}
