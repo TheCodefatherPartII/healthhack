@@ -14,3 +14,11 @@
 .petitions__input {
   width: 100%;
 }
+
+.petitions__submit-wrapper {
+  text-align: center;
+}
+
+.petitions__submit {
+  width: 100%;
+}

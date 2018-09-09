@@ -11,7 +11,8 @@ import {
   Label,
   Tab,
   Table,
-  TextArea
+  TextArea,
+  Button
 } from "semantic-ui-react";
 
 class DetailsPanel extends React.Component {
@@ -116,6 +117,11 @@ class DetailsPanel extends React.Component {
                 </Table.Cell>
                 <Table.Cell>
                   <TextArea className="petitions__input" />
+                </Table.Cell>
+              </Table.Row>
+              <Table.Row>
+                <Table.Cell colSpan="2" className="petitions__submit-wrapper">
+                  <Button className="petitions__submit">Submit</Button>
                 </Table.Cell>
               </Table.Row>
             </Table.Body>
