@@ -1,5 +1,17 @@
-import React from 'react';
-import { Button, Card, Grid, Header, Icon, Image, Input, Segment, Table, TextArea } from "semantic-ui-react";
+import React from "react";
+import {
+  Button,
+  Card,
+  Grid,
+  Header,
+  Icon,
+  Image,
+  Input,
+  Segment,
+  Table,
+  TextArea,
+  Progress
+} from "semantic-ui-react";
 
 class PetitionsPane extends React.Component {
   render() {
@@ -66,9 +78,10 @@ class PetitionsPane extends React.Component {
                   </Card.Description>
                 </Card.Content>
                 <Card.Content extra>
+                  <Progress percent={44} progress />
                   <a>
                     <Icon name="thumbs up outline" />
-                    10,320 Votes
+                    40,320 Votes
                   </a>
                 </Card.Content>
               </Card>
@@ -84,59 +97,18 @@ class PetitionsPane extends React.Component {
                   <Card.Description>Keep council secure</Card.Description>
                 </Card.Content>
                 <Card.Content extra>
+                  <Progress percent={36} progress />
                   <a>
                     <Icon name="thumbs up outline" />
-                    12,312 Votes
+                    34,312 Votes
                   </a>
                 </Card.Content>
               </Card>
             </Grid.Column>
           </Grid>
-          {/* <List className="petitions-list">
-            <ListItem>
-              <Card className="petition">
-                <Image src="https://placeimg.com/640/480/arch" />
-                <Card.Content>
-                  <Card.Header>Funding</Card.Header>
-                  <Card.Meta>
-                    <span className="date">Created in 2018</span>
-                  </Card.Meta>
-                  <Card.Description>
-                    Maintain funding for Stations
-                  </Card.Description>
-                </Card.Content>
-                <Card.Content extra>
-                  <a>
-                    <Icon name="hand point up outline" />
-                    22 Votes
-                  </a>
-                </Card.Content>
-              </Card>
-            </ListItem>
-            <ListItem>
-              <Card className="petition">
-                <Image src="https://placeimg.com/640/480/arch" />
-                <Card.Content>
-                  <Card.Header>Funding</Card.Header>
-                  <Card.Meta>
-                    <span className="date">Created in 2018</span>
-                  </Card.Meta>
-                  <Card.Description>
-                    Maintain funding for Stations
-                  </Card.Description>
-                </Card.Content>
-                <Card.Content extra>
-                  <a>
-                    <Icon name="hand point up outline" />
-                    22 Votes
-                  </a>
-                </Card.Content>
-              </Card>
-            </ListItem>
-          </List> */}
         </Segment>
       </div>
-    )
+    );
   }
 }
 
