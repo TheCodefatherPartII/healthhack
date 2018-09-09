@@ -31,3 +31,15 @@ body {
 ._loading-overlay {
   height: 100%;
 }
+
+.petitions-list {
+  display: flex;
+}
+
+/* .ui.card.petition {
+  width: 200px;
+} */
+
+.ui.grid > .column.petition-wrapperx {
+  width: 250px;
+}

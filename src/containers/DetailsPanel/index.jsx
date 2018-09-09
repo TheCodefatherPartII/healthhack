@@ -12,7 +12,10 @@ import {
   Tab,
   Table,
   TextArea,
-  Button
+  Button,
+  Card,
+  Image,
+  Grid
 } from "semantic-ui-react";
 
 class DetailsPanel extends React.Component {
@@ -48,7 +51,8 @@ class DetailsPanel extends React.Component {
     return (
       <div>
         <p>
-        These are the details of your local MP. Start a communication channel and raise your concerns.
+          These are the details of your local MP. Start a communication channel
+          and raise your concerns.
         </p>
         <Table>
           <Table.Body>
@@ -85,8 +89,10 @@ class DetailsPanel extends React.Component {
     return (
       <div>
         <p>
-        CouncilPlus allows you to create or support other neighbours' petitions to improve your Council or Local Government Area. 
-        Create or sign one. The power of the community resides in the general awareness and consequent action!
+          CouncilPlus allows you to create or support other neighbours'
+          petitions to improve your Council or Local Government Area. Create or
+          sign one. The power of the community resides in the general awareness
+          and consequent action!
         </p>
         <Segment>
           <Header>Create a Petition</Header>
@@ -129,6 +135,90 @@ class DetailsPanel extends React.Component {
         </Segment>
         <Segment>
           <Header>Current Petitions</Header>
+          <Grid>
+            <Grid.Column key="1" className="petition-wrapperx">
+              <Card className="petition">
+                <Image src="https://placeimg.com/640/480/arch" />
+                <Card.Content>
+                  <Card.Header>Funding</Card.Header>
+                  <Card.Meta>
+                    <span className="date">Created in 2018</span>
+                  </Card.Meta>
+                  <Card.Description>
+                    Maintain funding for Council station
+                  </Card.Description>
+                </Card.Content>
+                <Card.Content extra>
+                  <a>
+                    <Icon name="hand point up outline" />
+                    10,320 Votes
+                  </a>
+                </Card.Content>
+              </Card>
+            </Grid.Column>
+            <Grid.Column key="2" className="petition-wrapperx">
+              <Card className="petition">
+                <Image src="https://placeimg.com/640/480/arch" />
+                <Card.Content>
+                  <Card.Header>Security</Card.Header>
+                  <Card.Meta>
+                    <span className="date">Created in 2017</span>
+                  </Card.Meta>
+                  <Card.Description>
+                    Keep council secure
+                  </Card.Description>
+                </Card.Content>
+                <Card.Content extra>
+                  <a>
+                    <Icon name="hand point up outline" />
+                    12,312 Votes
+                  </a>
+                </Card.Content>
+              </Card>
+            </Grid.Column>
+          </Grid>
+          {/* <List className="petitions-list">
+            <ListItem>
+              <Card className="petition">
+                <Image src="https://placeimg.com/640/480/arch" />
+                <Card.Content>
+                  <Card.Header>Funding</Card.Header>
+                  <Card.Meta>
+                    <span className="date">Created in 2018</span>
+                  </Card.Meta>
+                  <Card.Description>
+                    Maintain funding for Stations
+                  </Card.Description>
+                </Card.Content>
+                <Card.Content extra>
+                  <a>
+                    <Icon name="hand point up outline" />
+                    22 Votes
+                  </a>
+                </Card.Content>
+              </Card>
+            </ListItem>
+            <ListItem>
+              <Card className="petition">
+                <Image src="https://placeimg.com/640/480/arch" />
+                <Card.Content>
+                  <Card.Header>Funding</Card.Header>
+                  <Card.Meta>
+                    <span className="date">Created in 2018</span>
+                  </Card.Meta>
+                  <Card.Description>
+                    Maintain funding for Stations
+                  </Card.Description>
+                </Card.Content>
+                <Card.Content extra>
+                  <a>
+                    <Icon name="hand point up outline" />
+                    22 Votes
+                  </a>
+                </Card.Content>
+              </Card>
+            </ListItem>
+          </List> */}
         </Segment>
       </div>
     );
