@@ -158,7 +158,7 @@ class DetailsPanel extends React.Component {
             </Grid.Column>
             <Grid.Column key="2" className="petition-wrapperx">
               <Card className="petition">
-                <Image src="https://placeimg.com/640/480/arch" />
+                <Image src="https://placeimg.com/640/480/nature" />
                 <Card.Content>
                   <Card.Header>Security</Card.Header>
                   <Card.Meta>
