@@ -20,6 +20,7 @@ function ordinal_suffix_of(i) {
   }
   return i + "th";
 }
+const generalName = (specific) => specific.replace('school', 'education').replace('hospital', 'health')
 
 class DetailsPane extends React.Component {
   renderStats() {
