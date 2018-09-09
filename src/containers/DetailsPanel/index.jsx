@@ -135,9 +135,9 @@ class DetailsPanel extends React.Component {
 
     const panes = [
       { menuItem: "Information", render: () => <DetailsPane {...this.state} { ...this.props }/> },
+      { menuItem: "Statistics", render: () => <StatsPane {...this.state} { ...this.props }/> },
       { menuItem: "Contacts", render: () => <ContactDetails {...this.state}/> },
-      { menuItem: "Petitions", render: () => <PetitionsPane {...this.state}/> },
-      { menuItem: "Statistics", render: () => <StatsPane { ...this.props }/> }
+      { menuItem: "Petitions", render: () => <PetitionsPane {...this.state}/> }
     ];
 
     return <Tab menu={{ secondary: true }} panes={panes} />;
