@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import DataService  from '../../services/DataService';
+import DataService from "../../services/DataService";
 
 import {
   Input,
@@ -17,16 +17,18 @@ import {
   Message,
   Card,
   Image,
-  Grid
+  Grid,
+  Progress
 } from "semantic-ui-react";
 
 class DetailsPanel extends React.Component {
-  state = { };
+  state = {};
 
   componentDidMount = () => {
     const service = new DataService();
 
-    service.getContactDetails()
+    service
+      .getContactDetails()
       .then(lgaDetails => this.setState({ lgaDetails }));
   };
 
@@ -41,8 +43,7 @@ class DetailsPanel extends React.Component {
 
     console.log(lga);
 
-    if (lga)
-      this.setState({ lga });
+    if (lga) this.setState({ lga });
   }
   renderStatistics = () => {
     console.log(this.state.lga);
@@ -52,11 +53,11 @@ class DetailsPanel extends React.Component {
       <div>
         <Message
           info
-          icon='map marker alternate'
+          icon="map marker alternate"
           header={this.state.lga.ORGNAME}
-          content={!Number.isNaN(population)
-            ? population + ' residents'
-            : undefined}
+          content={
+            !Number.isNaN(population) ? population + " residents" : undefined
+          }
         />
 
         <Segment>
@@ -82,7 +83,7 @@ class DetailsPanel extends React.Component {
         </Segment>
       </div>
     );
-  }
+  };
 
   renderContactDetails = () => {
     const {
@@ -113,7 +114,9 @@ class DetailsPanel extends React.Component {
                 <Icon name="user" />
                 &nbsp; Mayor:
               </Table.Cell>
-              <Table.Cell>{[MAYOR_SAL, MAYOR_FIRST, MAYOR_LAST].join(' ')}</Table.Cell>
+              <Table.Cell>
+                {[MAYOR_SAL, MAYOR_FIRST, MAYOR_LAST].join(" ")}
+              </Table.Cell>
             </Table.Row>
             <Table.Row>
               <Table.Cell>
@@ -121,7 +124,7 @@ class DetailsPanel extends React.Component {
                 &nbsp; Phone Number:
               </Table.Cell>
               <Table.Cell>
-                <a href={"tel:" + PHONE.replace(' ', '')}>{PHONE}</a>
+                <a href={"tel:" + PHONE.replace(" ", "")}>{PHONE}</a>
               </Table.Cell>
             </Table.Row>
           </Table.Body>
@@ -194,9 +197,10 @@ class DetailsPanel extends React.Component {
                   </Card.Description>
                 </Card.Content>
                 <Card.Content extra>
+                  <Progress percent={44} progress />
                   <a>
                     <Icon name="thumbs up outline" />
-                    10,320 Votes
+                    40,320 Votes
                   </a>
                 </Card.Content>
               </Card>
@@ -212,9 +216,10 @@ class DetailsPanel extends React.Component {
                   <Card.Description>Keep council secure</Card.Description>
                 </Card.Content>
                 <Card.Content extra>
+                  <Progress percent={36} progress />
                   <a>
                     <Icon name="thumbs up outline" />
-                    12,312 Votes
+                    34,312 Votes
                   </a>
                 </Card.Content>
               </Card>
